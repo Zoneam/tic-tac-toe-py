@@ -1,3 +1,5 @@
+import switch as switch
+
 winning_positions = [
     ['A1', 'B1', 'C1'],
     ['A2', 'B2', 'C2'],
@@ -51,9 +53,6 @@ def draw_board(occupied_positions_x = [], occupied_positions_o = []):
         if list(pos)[1] == "3":
             list_third[y_pos] = "O"
 
-
-    print("X--->",list_first)
-    print(occupied_positions_x, occupied_positions_o)
     print("----------------------")
     print("Let's play Py-Pac-Poe!")
     print("----------------------")
@@ -97,8 +96,11 @@ def start_game(turn):
             turn = "O"
         else:
             turn = "X"
-
+        if len(occupied_positions_x) + len(occupied_positions_o) == 9:
+            print(f"It is a Tie !")
+            break
         draw_board(occupied_positions_x, occupied_positions_o)
+
 
 # Checking for Winner
 def check_for_win(occupied_positions):
@@ -106,6 +108,5 @@ def check_for_win(occupied_positions):
         if all(item in occupied_positions for item in winning_position):
             return True
 
+
 game_init()
-
-
