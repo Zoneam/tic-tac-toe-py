@@ -1,4 +1,8 @@
-import switch as switch
+import os
+
+def clear_console():
+    os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+
 
 winning_positions = [
     ['A1', 'B1', 'C1'],
@@ -52,18 +56,18 @@ def draw_board(occupied_positions_x = [], occupied_positions_o = []):
             list_second[y_pos] = "O"
         if list(pos)[1] == "3":
             list_third[y_pos] = "O"
-
-    print("----------------------")
-    print("Let's play Py-Pac-Poe!")
-    print("----------------------")
+    print("  \033[91m----------------------\033[0m")
+    print("  \33[7mLet's play Py-Pac-Poe!\033[0m")
+    print("  \033[91m----------------------\033[0m")
     print("        ")
-    print(f" A | B | C")
+    print(f"\33[35m      A | B | C\033[0m")
     print("        ")
-    print(f" {list_first[0]} | {list_first[1]} | {list_first[2]}")
-    print("-----------")
-    print(f" {list_second[0]} | {list_second[1]} | {list_second[2]}")
-    print("-----------")
-    print(f" {list_third[0]} | {list_third[1]} | {list_third[2]}")
+    print(f"1)    {list_first[0]} \033[32m|\033[0m {list_first[1]} \033[32m|\033[0m {list_first[2]}")
+    print("\033[32m     -----------\033[0m")
+    print(f"2)    {list_second[0]} \033[32m|\033[0m {list_second[1]} \033[32m|\033[0m {list_second[2]}")
+    print("\033[32m     -----------\033[0m")
+    print(f"3)    {list_third[0]} \033[32m|\033[0m {list_third[1]} \033[32m|\033[0m {list_third[2]}")
+    print("        ")
 
 
 def start_game(turn):
@@ -75,7 +79,7 @@ def start_game(turn):
                 occupied_positions_x.append(user_input)
                 winner = check_for_win(occupied_positions_x)
                 if winner:
-                    print(f"{turn} is a Winner !!!")
+                    print(f"\x1b[6;30;42m {turn} is a Winner !!!\033[0m")
                     break
             else:
                 print(f"{user_input} is invalid Input !")
@@ -86,7 +90,7 @@ def start_game(turn):
                 occupied_positions_o.append(user_input)
                 winner = check_for_win(occupied_positions_o)
                 if winner:
-                    print(f"{turn} is a Winner !!!")
+                    print(f"\x1b[6;30;42m {turn} is a Winner !!!\033[0m")
                     break
             else:
                 print(f"{user_input} is invalid Input !")
@@ -99,6 +103,7 @@ def start_game(turn):
         if len(occupied_positions_x) + len(occupied_positions_o) == 9:
             print(f"It is a Tie !")
             break
+        clear_console()
         draw_board(occupied_positions_x, occupied_positions_o)
 
 
