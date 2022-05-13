@@ -1,9 +1,10 @@
 import os
 
+
 def clear_console():
     os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
-
+# Winning Positions
 winning_positions = [
     ['A1', 'B1', 'C1'],
     ['A2', 'B2', 'C2'],
@@ -17,13 +18,18 @@ winning_positions = [
 
 occupied_positions_x = []
 occupied_positions_o = []
+o_wins = 0
+x_wins = 0
+
+times_to_play = int(input("How Many Rounrs You Want To Play ? :"))
 
 
+# Game initialization
 def game_init():
     draw_board()
     start_game('X')
 
-
+# Drawing board
 def draw_board(occupied_positions_x = [], occupied_positions_o = []):
     list_first = [' ', ' ', ' ']
     list_second = [' ', ' ', ' ']
@@ -56,6 +62,7 @@ def draw_board(occupied_positions_x = [], occupied_positions_o = []):
             list_second[y_pos] = "O"
         if list(pos)[1] == "3":
             list_third[y_pos] = "O"
+            
     print("  \033[91m----------------------\033[0m")
     print("  \33[7mLet's play Py-Pac-Poe!\033[0m")
     print("  \033[91m----------------------\033[0m")
@@ -68,10 +75,14 @@ def draw_board(occupied_positions_x = [], occupied_positions_o = []):
     print("\033[32m     -----------\033[0m")
     print(f"3)    {list_third[0]} \033[32m|\033[0m {list_third[1]} \033[32m|\033[0m {list_third[2]}")
     print("        ")
+    print("  \033[91m-----------------\033[0m")
+    print(f"  \33[7m X score {x_wins} \033[0m")
+    print(f"  \33[7m O score {o_wins} \033[0m")
+    print("  \033[91m-----------------\033[0m")
 
 
 def start_game(turn):
-    global winning_positions, occupied_positions_o
+    global winning_positions, occupied_positions_o, x_wins, o_wins
     while True:
         if turn == "X":
             user_input = input("Player X's Move (example B2):").upper()
@@ -79,7 +90,10 @@ def start_game(turn):
                 occupied_positions_x.append(user_input)
                 winner = check_for_win(occupied_positions_x)
                 if winner:
-                    print(f"\x1b[6;30;42m {turn} is a Winner !!!\033[0m")
+                    print(f"\x1b[6;30;42m {turn} is the Winner !!!\033[0m")
+                    o_wins += 1
+                    clear_console()
+                    draw_board(occupied_positions_x, occupied_positions_o)
                     break
             else:
                 print(f"{user_input} is invalid Input !")
@@ -90,7 +104,10 @@ def start_game(turn):
                 occupied_positions_o.append(user_input)
                 winner = check_for_win(occupied_positions_o)
                 if winner:
-                    print(f"\x1b[6;30;42m {turn} is a Winner !!!\033[0m")
+                    print(f"\x1b[6;30;42m {turn} is the Winner !!!\033[0m")
+                    x_wins += 1
+                    clear_console()
+                    draw_board(occupied_positions_x, occupied_positions_o)
                     break
             else:
                 print(f"{user_input} is invalid Input !")
@@ -114,4 +131,10 @@ def check_for_win(occupied_positions):
             return True
 
 
-game_init()
+for times in range(times_to_play):
+    occupied_positions_x = []
+    occupied_positions_o = []
+    clear_console()
+    game_init()
+
+    
